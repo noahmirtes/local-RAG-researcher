@@ -1,0 +1,23 @@
+What's the goal of this project?
+
+I want to make a script that can provide a research paper for me using local materials that I've processed and vectorized.
+This pipeline should take a question from me and loop x times in order to create some kind of report at the end.
+It will use the materials I've ingested into the pipeline as the foundation of this -- no web search or baked in LLM bias.
+
+The idea is that if there is a particular topic I want to study, I can give this system a prompt and a collection of 
+materials (epub, pdf, txt) that it then ingests, if not already done, and begins the process of asking questions and searching for answers in the
+text provided.
+
+This will be powered by a local reasoning LLM and embedding model.
+
+My goal is to be able to provide enough materials to this pipeline that it can write me coherent reports.
+
+-------------------------------
+
+We will start with the ingest phase.
+I want to be able to accept 3 different forms of text:
+    - epub
+    - pdf
+    - txt
+
+The pdf will be the most complex one mostly because I've already done epub parsing into text format.
