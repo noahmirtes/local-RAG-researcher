@@ -107,8 +107,6 @@ def chunk_text(text : str, enc, token_size : int = 800, overlap_tokens : int = 1
 # -------------------------------- #
 
 
-
-
 def ingest_text(text : str, source_name : str, collection):
     """
     The main function that receives text, chunks, embeds, and adds to the vector database
@@ -167,32 +165,34 @@ def ingest_text(text : str, source_name : str, collection):
 
 
 
-
-
-
 def main(INGEST_INPUT):
-
+    """
+    Main ingest pipeline that takes epub, txt, and pdf documents, chunks text, embeds, and stores in a vector database
+    """
     ingest_files = get_files_with_extensions(INGEST_INPUT, ['.epub','.txt','.pdf'])
 
     print(f"Extracting text from {len(ingest_files)} files")
     INGEST_DOCUMENTS = []
     for f in ingest_files:
-        ext = os.path.splitext(f)[-1].replace(".","")
+        try:
+            ext = os.path.splitext(f)[-1].replace(".","")
 
-        if ext == 'epub':
-            name, text = extract_epub_text(f)
-        elif ext == 'txt':
-            text = extract_txt_text()
-        elif ext == 'pdf':
-            text = extract_pdf_text()
+            if ext == 'epub':
+                name, text = extract_epub_text(f)
+            elif ext == 'txt':
+                text = extract_txt_text()
+            elif ext == 'pdf':
+                text = extract_pdf_text()
 
-        ingest_document = IngestDocument(
-            type=ext,
-            path=f,
-            name=name,
-            text=text
-        )
-        INGEST_DOCUMENTS.append(ingest_document)
+            ingest_document = IngestDocument(
+                type=ext,
+                path=f,
+                name=name,
+                text=text
+            )
+            INGEST_DOCUMENTS.append(ingest_document)
+        except Exception as e:
+            print(f"Unable to extract text from {os.path.basename(f)} : {e}")
 
 
     # loop over all the data models and ingest the text
@@ -209,6 +209,6 @@ def main(INGEST_INPUT):
 
 
 
-
-main("/Volumes/FILES/Noah's Library/Nonfiction/Culture & Politics")
+if __name__ == "__main__":
+    main("/Volumes/FILES/Noah's Library/Nonfiction/History")
 

@@ -4,7 +4,7 @@ import chromadb
 from chromadb.config import Settings
 
 COLLECTION_NAME = "local_research_nomic_embed"
-DB_PATH = "/Users/noah/REPOS/local_researcher/chroma_store"
+DB_PATH = "/Users/noah/REPOS/local-RAG-researcher/chroma_store"
 
 def get_collection():
     client = chromadb.Client(
